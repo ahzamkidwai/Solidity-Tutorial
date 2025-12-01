@@ -9,13 +9,19 @@ contract Storage {
         owner = msg.sender;
     }
 
-    function add(uint a) public {
-        require(owner == msg.sender, "Caller is not the contract owner (IN ADD)");
+    // Modifiers are simply the middlewares in express 
+    modifier onlyOwner() {
+        require(owner == msg.sender, "Caller is not the contract owner");
+        _; // like next() in middlewares of express
+    }
+
+    function add(uint a) public onlyOwner {
+        // require(owner == msg.sender, "Caller is not the contract owner (IN ADD)");
         number = number + a;
     }
 
-    function sub(uint a) public {
-        require(owner == msg.sender, "Caller is not the contract owner (IN SUB)");
+    function sub(uint a) public onlyOwner {
+        // require(owner == msg.sender, "Caller is not the contract owner (IN SUB)");
         number = number - a;
     }
 
